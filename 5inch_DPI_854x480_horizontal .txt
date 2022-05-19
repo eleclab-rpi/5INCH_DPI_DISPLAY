@@ -1,0 +1,23 @@
+HI, you can set the display and touch screen to be horizontal as follows
+
+1. Add this line at the end of the /boot/config.txt
+display_rotate=1  #1：90；2: 180； 3: 270
+
+2. Select one of the following lines to add the touchscreen rotation function in the /etc/X11/xorg.conf.d/40-libinput-conf file after the MatchIsTouchscreen "on" line.
+
+Use the different rotation parameters below :
+Option “CalibrationMatrix” “0 1 0 -1 0 1 0 0 1”     #touchscreen rotate 90
+Option “CalibrationMatrix” “-1 0 1 0 -1 1 0 0 1”   #touchscreen rotate 180
+Option “CalibrationMatrix” “0 -1 1 1 0 0 0 0 1”    #touchscreen rotate 270
+
+===================================================================  
+1. sudo apt-get install xserver-xorg-input-libinput     
+2. sudo mkdir /etc/X11/xorg.conf.d
+3. sudo cp /usr/share/X11/xorg.conf.d/40-libinput.conf /etc/X11/xorg.conf.d/
+
+Modify 40-libinput-conf  as follows:
+     Section "InputClass"
+             Identifier "libinput touchscreen catchall"
+             MatchIsTouchscreen "on"
+             Option “CalibrationMatrix” “0 1 0 -1 0 1 0 0 1” 
+
